@@ -11,3 +11,5 @@ INSERT INTO people(name, age)
 VALUES
 ('Henry David', 21),
 ('Rick Davidson', 22);
+
+SELECT * FROM people;
