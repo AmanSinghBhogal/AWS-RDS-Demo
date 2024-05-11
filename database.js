@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-console.log(process.env.MYSQL_PASS);
-
 
 // Creating the connection to RDS Database
 // Replace the following:
@@ -22,11 +20,24 @@ const connection = mysql.createPool({
 
 
 // Fetching Records from the table
-async function getRecords() {
+export async function getRecords() {
     const [records] = await connection.query("SELECT * from people");
     return records;
 }
 
-const people = await getRecords();
-console.log(people);
+// Pushing new Record to the DB
+export async function putRecord(name, age){
+    const result = await connection.query(`
+        INSERT INTO people(name, age)
+        VALUES (?, ?)
+    `, [name, age]);
+    return result;
+}
+
+// Testing the putRecord
+// const newPerson = await putRecord('Alice Kol', 23);
+// console.log(newPerson);
+
+// const people = await getRecords();
+// console.log(people);
 
